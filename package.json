@@ -49,14 +49,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/RecordEvolution/widget-sidenav.git"
+        "url": "git+https://github.com/IronFlock/widget-sidenav.git"
     },
     "keywords": [
         "widget",
         "sidenav"
     ],
     "bugs": {
-        "url": "https://github.com/RecordEvolution/widget-sidenav/issues"
+        "url": "https://github.com/IronFlock/widget-sidenav/issues"
     },
-    "homepage": "https://github.com/RecordEvolution/widget-sidenav#readme"
+    "homepage": "https://github.com/IronFlock/widget-sidenav#readme"
 }
