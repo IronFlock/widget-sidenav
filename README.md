@@ -7,7 +7,7 @@ IronFlock widget: A Lit 3.x web component that renders a vertical side navigatio
 ## Installation
 
 ```bash
-npm i @record-evolution/widget-sidenav
+npm i @ironflock/widget-sidenav
 ```
 
 **Peer Dependencies:** This widget requires `@material/web` to be available at runtime via import map or bundled separately.
@@ -16,7 +16,7 @@ npm i @record-evolution/widget-sidenav
 
 ```html
 <script type="module">
-    import '@record-evolution/widget-sidenav'
+    import '@ironflock/widget-sidenav'
 </script>
 
 <widget-sidenav-1.0.12></widget-sidenav-1.0.12>
