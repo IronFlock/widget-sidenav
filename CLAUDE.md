@@ -33,7 +33,7 @@ The element is registered as `widget-sidenav-versionplaceholder`. At build time,
 
 The component exposes three reactive properties and one event:
 - `inputData: SideNavigationConfiguration` — title, route, variables, style, and `navItems[]` per the schema.
-- `theme: { theme_name, theme_object }` — falls back behind CSS custom properties `--re-text-color` and `--re-tile-background-color`, which take precedence (resolved in `registerTheme`). These are not snapshotted: `registerTheme()` stores a `var(--re-…, <theme value>)` chain, so a change to the host property repaints the tile live without the widget being told.
+- `theme: { theme_name, theme_object }` — falls back behind the CSS custom property `--re-text-color`, which takes precedence (resolved in `registerTheme`). These are not snapshotted: `registerTheme()` stores a `var(--re-…, <theme value>)` chain, so a change to the host property repaints the tile live without the widget being told. The widget paints no tile background of its own, only an explicitly configured `style.backgroundColor`: studio's `widget-item` already paints `--re-tile-background-color` on the tile, and painting it again here composited a translucent tile colour twice.
 - `route: string` — the host's current route. `matchesRoute` highlights an item when the route starts with an absolute item route (`/...`) or ends with / equals a relative one.
 - `nav-submit` CustomEvent (bubbles, composed) with `{ path }` — emitted on title/item click for the SPA host to handle navigation.
 

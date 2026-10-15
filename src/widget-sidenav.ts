@@ -10,32 +10,12 @@ type Theme = {
     theme_object: any
 }
 
-/**
- * ECharts themes describe a *chart canvas*, and most of them set
- * `backgroundColor` to a fully transparent colour (the light theme uses
- * `rgba(0, 0, 0, 0)`). That is a valid, truthy colour string, so using it
- * verbatim as the nav background paints nothing at all. Treat any
- * fully transparent theme colour as "no colour" so the fallback kicks in.
- */
-const isTransparent = (color?: string) => {
-    if (!color) return true
-    const value = color.trim().toLowerCase()
-    if (value === 'transparent') return true
-    const functional = value.match(/^(?:rgba|hsla)\([^)]*[,/]\s*([\d.]+%?)\s*\)$/)
-    if (functional) return parseFloat(functional[1]) === 0
-    // #rrggbbaa / #rgba
-    if (/^#[0-9a-f]{8}$/.test(value)) return value.slice(7) === '00'
-    if (/^#[0-9a-f]{4}$/.test(value)) return value[4] === '0'
-    return false
-}
-
 @customElement('widget-sidenav-versionplaceholder')
 export class WidgetSidenav extends LitElement {
     @property({ type: Object }) inputData?: SideNavigationConfiguration
     @property({ type: Object }) theme?: Theme
     @property({ type: String }) route?: string
 
-    @state() private themeBgColor?: string
     @state() private themeTitleColor?: string
 
     version: string = 'versionplaceholder'
@@ -53,8 +33,6 @@ export class WidgetSidenav extends LitElement {
     }
 
     registerTheme(theme?: Theme) {
-        const themeBgColor = theme?.theme_object?.backgroundColor
-        this.themeBgColor = `var(--re-tile-background-color, ${(isTransparent(themeBgColor) ? undefined : themeBgColor) || 'transparent'})`
         this.themeTitleColor = `var(--re-text-color, ${theme?.theme_object?.title?.textStyle?.color || 'inherit'})`
     }
 
@@ -197,7 +175,7 @@ export class WidgetSidenav extends LitElement {
         const fontWeight = this.inputData?.style?.fontWeight ?? 400
         const iconFontSize = fontSize * 1.5
         const fontColor = this.inputData?.style?.color || this.themeTitleColor || 'black'
-        const bgColor = this.inputData?.style?.backgroundColor || this.themeBgColor || 'white'
+        const bgColor = this.inputData?.style?.backgroundColor || 'transparent'
         const gap = fontSize * 0.4
         return html`
             <div
