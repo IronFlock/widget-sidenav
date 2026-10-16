@@ -92,7 +92,7 @@ element.route = '/settings/profile' // Highlights "Settings" nav item
 
 ## Material Icons
 
-Icons are rendered using `@material/web` icon component. Use icon names from [Google Material Symbols](https://fonts.google.com/icons):
+Icons are rendered using `@material/web` icon component. Use icon names from [Google Material Symbols](https://fonts.google.com/icons); letter case does not matter. The icon name can also be bound to a column. A value that is not an icon name shows no icon, so a bad value never shows up as a word next to the label:
 
 ```javascript
 {

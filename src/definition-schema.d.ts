@@ -42,7 +42,7 @@ export type FontWeight = number;
  */
 export type Label1 = string;
 /**
- * Material icon name displayed alongside the label. Find icon names at https://fonts.google.com/icons (e.g., 'dashboard', 'settings', 'analytics', 'people').
+ * Material icon name displayed alongside the label. Find icon names at https://fonts.google.com/icons (e.g., 'dashboard', 'settings', 'analytics', 'people'). Can be bound to a column, so the icon can follow the data (e.g., a status icon per item). A value that is not a Material icon name shows no icon.
  */
 export type IconName = string;
 /**

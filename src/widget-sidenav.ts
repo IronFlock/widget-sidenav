@@ -2,6 +2,7 @@ import { html, css, LitElement, PropertyValues } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { repeat } from 'lit/directives/repeat.js'
 import { SideNavigationConfiguration } from './definition-schema'
+import { IconNames } from './icon-names'
 
 import '@material/web/icon/icon.js'
 
@@ -17,6 +18,8 @@ export class WidgetSidenav extends LitElement {
     @property({ type: String }) route?: string
 
     @state() private themeTitleColor?: string
+
+    private icons = new IconNames(this)
 
     version: string = 'versionplaceholder'
 
@@ -202,27 +205,29 @@ export class WidgetSidenav extends LitElement {
                     ${repeat(
                         this.inputData?.navItems || [],
                         (item) => item.label,
-                        (item) => html`
-                            <div
-                                class="nav-item ${this.matchesRoute(this.resolveRoute(item))
-                                    ? 'selected'
-                                    : ''}"
-                                style="gap: ${gap}px;"
-                                @click=${() => this.handleNavItemClick(this.resolveRoute(item))}
-                            >
-                                ${item.iconName
-                                    ? html`
-                                          <md-icon style="--md-icon-size: ${iconFontSize}px;"
-                                              >${item.iconName}
-                                          </md-icon>
-                                      `
-                                    : ''}
-                                ${item.label}
-                            </div>
-                        `
+                        (item) => {
+                            const icon = this.icons.name(item.iconName)
+                            return html`
+                                <div
+                                    class="nav-item ${this.matchesRoute(this.resolveRoute(item))
+                                        ? 'selected'
+                                        : ''}"
+                                    style="gap: ${gap}px;"
+                                    @click=${() => this.handleNavItemClick(this.resolveRoute(item))}
+                                >
+                                    ${icon
+                                        ? html`<md-icon style="--md-icon-size: ${iconFontSize}px;"
+                                              >${icon}</md-icon
+                                          >`
+                                        : ''}
+                                    ${item.label}
+                                </div>
+                            `
+                        }
                     )}
                 </div>
             </div>
+            ${this.icons.probe()}
         `
     }
 }

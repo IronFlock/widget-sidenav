@@ -43,6 +43,12 @@ The component exposes three reactive properties and one event:
 
 `demo/index.html` is the development entrypoint: it fetches `package.json` to build the versioned tag, loads `dist/widget-sidenav.js`, fetches `src/default-data.json` as `inputData`, and applies a theme from `demo/themes/{light,chalk,vintage}.json`. Material Symbols and fonts are pulled from Google Fonts CDN.
 
+### Icon names (`src/icon-names.ts`)
+
+`iconName` can be bound to data, so the widget draws an icon only for a value the icon font draws as one. Anything else (an unknown name, a number, `null`, text with spaces) shows no icon rather than the raw word. `IconNames.name()` decides by measuring on a canvas. Material Symbols turns a name it knows, in any letter case, into one ligature glyph one em wide, and other text keeps one glyph per character, each also one em wide in this font. So a value is a name when it measures one em and narrower than its characters measured one at a time. In Chromium and Firefox that accepted all 3,873 names of material-symbols 0.44.6 and rejected near misses such as `homee`, `hom` and `tv_`. Measuring asks the font Studio actually loads, where a list of names would go stale as Google adds icons. Verdicts are cached per name, capped at 1000 because bound values can be anything.
+
+Nothing is drawn until the font has loaded, and Studio swaps the font's stylesheet in from a preload, so a widget can render before it exists. Until then `probe()` renders a hidden word in the icon font, and `loadingdone` on `document.fonts` renders the widget again. Keep the probe: the browser loads a font face only when something uses it, and without the probe a page where nothing else uses the icon font never shows the icons. The same file is in widget-sidenav, widget-navbar and widget-navbutton; change them together.
+
 ## `aiSelection` in `src/definition-schema.json`
 
 The schema root carries an `aiSelection` block next to `title` and `description`. It is **not** JSON Schema and describes no config field — it exists so the IronFlock AI's Widget Builder can pick the right widget for a given shape of data, using knowledge only the widget author has:
