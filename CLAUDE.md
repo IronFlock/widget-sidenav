@@ -70,3 +70,7 @@ When maintaining it:
 - Prefer entries that discriminate against a *neighbouring* widget. Generic rejections are cheap; the ones that pay are those an author could plausibly get wrong.
 - The `notFor` lists are a set across all `widget-*` repos and are meant to be reciprocal — if this widget routes to another for some case, that widget should usually route back for the converse. Changing one side is a cue to check the other.
 - Update it whenever a property changes what this widget can *do*, not just how it looks.
+
+## `layout` in `src/definition-schema.json`
+
+The schema root also carries `"layout": {"fixedWidth": true, "width": 184}`: the widget keeps a fixed width of about 184 px, because a menu has the width of its labels, not a share of the screen. Like `aiSelection` it is not JSON Schema and describes no config field. Studio sets `fixedWidth` and the matching grid size when the widget is dropped onto a board, the IronFlock AI does the same when it places the widget, and the ironflock-templates validator warns about a board position without `fixedWidth`. Change `width` when the widget's natural width changes.

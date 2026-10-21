@@ -15,6 +15,10 @@
             "A heading that is only text and does not navigate — use widget-label."
         ]
     },
+    "layout": {
+        "fixedWidth": true,
+        "width": 184
+    },
     "type": "object",
     "properties": {
         "title": {
