@@ -38,6 +38,8 @@ The component exposes three reactive properties and one event:
 - `route: string` — the host's current route. `matchesRoute` highlights an item when the route starts with an absolute item route (`/...`) or ends with / equals a relative one.
 - `nav-submit` CustomEvent (bubbles, composed) with `{ path }` — emitted on title/item click for the SPA host to handle navigation.
 
+The title is set apart from the items by weight: it is bold (`--title-weight`: 700, or 900 when `style.fontWeight` is 600 or more). It used to inherit the item weight and read as one more item. widget-navbar also draws a faint rule between its title and tabs; a rule under the sidenav title was tried and dropped as unwanted.
+
 `resolveRoute` performs two transforms before matching/dispatch: `{{label}}` substitution from `inputData.variables` (URL-encoded), and wildcard segment substitution where `*` in an item route is replaced by the corresponding segment of the current `route`.
 
 ### Demo harness

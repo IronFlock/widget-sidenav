@@ -167,15 +167,15 @@ export class WidgetSidenav extends LitElement {
             margin: 0;
             padding: 0px;
             font-size: 1.2em;
-            /* the UA stylesheet forces bold, which would ignore the
-               configured font weight */
-            font-weight: inherit;
+            font-weight: var(--title-weight);
         }
     `
 
     render() {
         const fontSize = this.inputData?.style?.fontSize ?? 16
         const fontWeight = this.inputData?.style?.fontWeight ?? 400
+        // the title is bold, and heavier still when the items are bold too
+        const titleWeight = fontWeight >= 600 ? 900 : 700
         const iconFontSize = fontSize * 1.5
         const fontColor = this.inputData?.style?.color || this.themeTitleColor || 'black'
         const bgColor = this.inputData?.style?.backgroundColor || 'transparent'
@@ -184,7 +184,7 @@ export class WidgetSidenav extends LitElement {
             <div
                 class="wrapper"
                 style="background-color: ${bgColor}; color: ${fontColor};
-                font-weight: ${fontWeight};
+                font-weight: ${fontWeight}; --title-weight: ${titleWeight};
                 font-size: ${fontSize}px;"
             >
                 <h2

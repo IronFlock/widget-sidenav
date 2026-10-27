@@ -6,7 +6,7 @@
  */
 
 /**
- * The header text displayed at the top of the side navigation, typically used for branding or section identification.
+ * The header text displayed at the top of the side navigation, typically used for branding or section identification. It is drawn bold at 1.2 times the item font size, so it needs no styling of its own to stand apart from the navigation items.
  */
 export type TitleSettings = string;
 /**
@@ -34,7 +34,7 @@ export type TitleNavigationVariables = {
  */
 export type FontSize = number;
 /**
- * Font weight for navigation items (100=thin, 400=normal, 700=bold, 900=black).
+ * Font weight for navigation items (100=thin, 400=normal, 700=bold, 900=black). The title is always bold: 700, or 900 when the items are 600 or heavier.
  */
 export type FontWeight = number;
 /**
