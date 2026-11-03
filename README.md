@@ -87,8 +87,12 @@ The widget highlights the active navigation item based on the current route:
 element.route = '/settings/profile' // Highlights "Settings" nav item
 ```
 
-- Routes starting with `/` are matched from the beginning (absolute)
-- Other routes are matched from the end (relative)
+Routes are compared by whole path segments, so an item `/ab` is not active on `/abc`.
+
+- A route starting with `/` (absolute) matches its own page and every page below it: `/settings` is active on `/settings/profile`. The root `/` matches only the root page.
+- Any other route (relative) matches a page whose path ends with it: `profile` is active on `/settings/profile`.
+- Query parameters in an item route must all be in the current route with the same value. The current route's other parameters are ignored.
+- Only the most specific matching item is highlighted. An item naming the current page beats one naming a section it is in, a deeper section beats a shallower one, and an item with more matching query parameters beats one with fewer. With items `/machines` and `/machines/alarms`, only "Alarms" is highlighted on `/machines/alarms/7`.
 
 ## Material Icons
 

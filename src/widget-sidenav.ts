@@ -3,6 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js'
 import { repeat } from 'lit/directives/repeat.js'
 import { SideNavigationConfiguration } from './definition-schema'
 import { IconNames } from './icon-names'
+import { activeItems } from './route-match'
 
 import '@material/web/icon/icon.js'
 
@@ -49,12 +50,6 @@ export class WidgetSidenav extends LitElement {
         this.dispatchEvent(event)
     }
 
-    trimRoute(route?: string) {
-        route = String(route)
-        if (!route) return ''
-        return '/' + route.split('/').filter(Boolean).join('/')
-    }
-
     resolveRoute(item?: any): string | undefined {
         let route = String(item?.route ?? '')
         if (item?.variables) {
@@ -77,18 +72,6 @@ export class WidgetSidenav extends LitElement {
             route = (route.startsWith('/') ? '/' : '') + routeSegments.filter(Boolean).join('/')
         }
         return route
-    }
-
-    matchesRoute(itemRoute?: string) {
-        if (itemRoute === undefined) return false
-        itemRoute = String(itemRoute)
-        const route = this.trimRoute(decodeURIComponent(this.route || '/'))
-        const subRoute = this.trimRoute(itemRoute)
-        if (itemRoute.startsWith('/')) {
-            return route.startsWith(subRoute)
-        } else {
-            return route.endsWith(subRoute) || route === subRoute
-        }
     }
 
     static styles = css`
@@ -180,6 +163,9 @@ export class WidgetSidenav extends LitElement {
         const fontColor = this.inputData?.style?.color || this.themeTitleColor || 'black'
         const bgColor = this.inputData?.style?.backgroundColor || 'transparent'
         const gap = fontSize * 0.4
+        const navItems = Array.isArray(this.inputData?.navItems) ? this.inputData.navItems : []
+        const itemRoutes = navItems.map((item) => this.resolveRoute(item))
+        const active = activeItems(itemRoutes, this.route)
         return html`
             <div
                 class="wrapper"
@@ -203,17 +189,15 @@ export class WidgetSidenav extends LitElement {
                 </h2>
                 <div class="nav-list">
                     ${repeat(
-                        this.inputData?.navItems || [],
+                        navItems,
                         (item) => item.label,
-                        (item) => {
+                        (item, index) => {
                             const icon = this.icons.name(item.iconName)
                             return html`
                                 <div
-                                    class="nav-item ${this.matchesRoute(this.resolveRoute(item))
-                                        ? 'selected'
-                                        : ''}"
+                                    class="nav-item ${active[index] ? 'selected' : ''}"
                                     style="gap: ${gap}px;"
-                                    @click=${() => this.handleNavItemClick(this.resolveRoute(item))}
+                                    @click=${() => this.handleNavItemClick(itemRoutes[index])}
                                 >
                                     ${icon
                                         ? html`<md-icon style="--md-icon-size: ${iconFontSize}px;"
