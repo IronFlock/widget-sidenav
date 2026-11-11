@@ -40,7 +40,7 @@ The component exposes three reactive properties and one event:
 
 The title is set apart from the items by weight: it is bold (`--title-weight`: 700, or 900 when `style.fontWeight` is 600 or more). It used to inherit the item weight and read as one more item. widget-navbar also draws a faint rule between its title and tabs; a rule under the sidenav title was tried and dropped as unwanted.
 
-`resolveRoute` performs two transforms before matching/dispatch: `{{label}}` substitution from `inputData.variables` (URL-encoded), and wildcard segment substitution where `*` in an item route is replaced by the corresponding segment of the current `route`.
+`resolveRoute` performs two transforms before matching/dispatch: `{{label}}` substitution from `inputData.variables` (URL-encoded), and wildcard segment substitution where `*` in an item route is replaced by the corresponding path segment of the current `route`, whose `?query` is cut off first (otherwise the last segment carries the query and a deeper item route ends up inside it).
 
 ### Demo harness
 
