@@ -62,7 +62,9 @@ export class WidgetSidenav extends LitElement {
             }
         }
         if (route.includes('*')) {
-            const currentSegments = (this.route || '').split('/').filter(Boolean)
+            // `route` carries the page's ?query. Take path segments only, or the
+            // last one swallows the query and the rest of the route lands in it.
+            const currentSegments = (this.route || '').split('?')[0].split('/').filter(Boolean)
             const routeSegments = route.split('/').filter(Boolean)
             for (let i = 0; i < routeSegments.length; i++) {
                 if (routeSegments[i] === '*') {
