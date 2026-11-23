@@ -77,3 +77,5 @@ When maintaining it:
 ## `layout` in `src/definition-schema.json`
 
 The schema root also carries `"layout": {"fixedWidth": true, "width": 184}`: the widget keeps a fixed width of about 184 px, because a menu has the width of its labels, not a share of the screen. Like `aiSelection` it is not JSON Schema and describes no config field. Studio sets `fixedWidth` and the matching grid size when the widget is dropped onto a board, the IronFlock AI does the same when it places the widget, and the ironflock-templates validator warns about a board position without `fixedWidth`. Change `width` when the widget's natural width changes.
+
+@AGENTS.md
